@@ -7,5 +7,9 @@ export const styles = {
     appoinmentInp: 'w-full outline-none border-1 border-[#52525B40] rounded-[8px] py-[12px] pl-[16px] pr-[50px] font-normal text-[16px] leading-[24px] text-[#52525B] md:mb-0 mb-[20px]',
     appoinmentFormContent: 'flex flex-col gap-[8px] relative',
     contactInp: 'xl:min-w-[270px] w-full py-[16px] px-[20px] bg-[#FFFFFF4D] rounded-[5px] font-normal text-[16px] text-[#FFFFFF] placeholder:text-[#FFFFFF] outline-none',
-    title: 'font-black text-[22px] lg:text-[45px] md:text-[56px] md:leading-[74px] text-[#18181B] pb-[8px] border-b-1 border-b-[#BCBCBC]'
+    title: 'lg:w-[60%] font-bold text-[22px] lg:text-[45px] md:text-[56px] md:leading-[74px] text-[#18181B] pb-[8px] border-b-1 border-b-[#BCBCBC]',
+    subTitle: 'font-semibold lg:text-[45px] text-[22px] md:text-[48px] md:mt-0 mt-[20px] md:leading-[64px] text-[#18181B] md:text-right',
+    subTitles: 'block font-bold md:text-[60px] md:leading-[64px] text-[#18181B]',
+    overviewTitle: 'flex gap-[16px] items-center font-medium text-[22px] leading-[32px] text-[#18181B',
+    error_message: 'font-semibold text-red-500 text-left my-3 text-[15px]'
 }

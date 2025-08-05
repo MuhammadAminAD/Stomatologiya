@@ -16,3 +16,10 @@ body {
   color: var(--foreground);
   font-family: "Nunito", sans-serif;
 }
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  cursor: pointer;
+  position: absolute;
+  right: 0;
+}

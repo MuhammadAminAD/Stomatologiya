@@ -1,7 +1,7 @@
 import React from 'react'
 import banner from "@/assets/images/HeaderBanner.png"
 import Image from 'next/image'
-import PhoneIcon from './Icons/PhoneIcon'
+import PhoneIcon from '../assets/icons/PhoneIcon'
 import { styles } from '@/styles/index.style'
 
 export default function Header() {
@@ -13,7 +13,7 @@ export default function Header() {
                         Quality Dental Services</h1>
                     <p className='text-md lg:text-[20px] text-[#777] max-w-7/10 text-center md:text-left mx-auto md:mx-0'>Appropriately embrace transparent materials via turnkey niche markets. </p>
                     <a href="tel:+99999999999">
-                        <button className='w-full lg:w-fit py-4 px-10 rounded-lg bg-[#3C2A97] text-white font-bold mt-8 lg:mt-16 cursor-pointer flex items-center justify-center gap-2'>
+                        <button className='w-full lg:w-fit py-4 px-10 rounded-lg bg-[#3C2A97] text-white font-bold mt-8 lg:mt-16 cursor-pointer border-2 border-[#3C2A97] flex items-center justify-center gap-2 hover:bg-transparent hover:text-black transition-all duration-500'>
                             <PhoneIcon />Call Now
                         </button>
                     </a>

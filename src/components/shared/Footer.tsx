@@ -1,4 +1,4 @@
-import { footerMenuList } from "@/app/constants";
+import { footerMenuList } from "@/constants/index.constants";
 import { styles } from "@/styles/index.style";
 import Link from "next/link";
 
@@ -35,7 +35,7 @@ export default function Footer() {
                 </div>
                 <div>
                     <h3 className={`${styles.footerTitle} lg:mt-0 mt-[45px]`}>Say hello to us</h3>
-                    <Link href={'/'} className="font-normal text-[16px] text-[#fff] ">hello@reallygreatsite.com</Link>
+                    <Link href={'/'} className="font-normal text-[16px] text-[#fff]  hover:underline">hello@reallygreatsite.com</Link>
                     <h3 className="font-normal text-[14px] text-[#fff]">Address <span className="block mt-[20px] md:mt-[32px]">123 Anywhere St., Any City, NY 39200</span></h3>
                 </div>
             </div>
