@@ -1,8 +1,7 @@
 'use client'
 
 import { styles } from "@/styles/index.style";
-import calendarIcon from "@/assets/icons/calendar.svg"
-import Image from "next/image";
+import { Calendar } from "lucide-react";
 import { useState } from "react";
 
 export default function AppoinmentForm() {
@@ -134,11 +133,11 @@ export default function AppoinmentForm() {
                     <input
                         value={date}
                         onChange={(e) => setDate(e.target.value)}
-                        className={`${styles.appoinmentInp} `}
+                        className={`${styles.appoinmentInp}`}
                         type="date"
                         placeholder="DD/MM/YYYY"
                     />
-                    <Image className="absolute top-[45px] right-[16px]" src={calendarIcon} alt="calendarIcon" />
+                    <Calendar className="absolute top-[45px] right-[16px] w-5 h-5 text-gray-400" />
                     {errors.date && <p className={`${styles.error_message}`}>{errors.date}</p>}
                 </div>
 
