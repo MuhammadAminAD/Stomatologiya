@@ -5,7 +5,7 @@ import AppoinmentForm from "./AppoinmentForm";
 
 export default function Appoinment() {
     return (
-        <div className={`${styles.Container} lg::pt-[140px] pt-[80px] pb-[120px]`}>
+        <div id="consult-page" className={`${styles.Container} lg:py-[150px] pt-[80px]`}>
             <div className="lg:flex justify-between items-center">
                 <h2 className={`${styles.title}`}>MAKE AN <span className="text-[#3C2A97]">APPOINMENT</span></h2>
                 <h3 className={`${styles.subTitle}`}>Consult with our <span className={`${styles.subTitles}`}>Doctor</span></h3>

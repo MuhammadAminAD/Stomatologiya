@@ -5,7 +5,7 @@ import { styles } from "@/styles/index.style"
 
 export default function Overview() {
     return (
-        <div className="w-full lg:flex gap-[60px] items-center">
+        <div id="provide-page" className="w-full lg:flex gap-[60px] items-center">
             <div className="lg:pt-[116px] py-[50px] pl-[20px] lg:pb-[104px] bg-[#F8FAFC] rounded-br-[136px] lg:pl-[108px] pr-[32px]">
                 <h2 className="font-semibold text-[26px] md:text-[50px] md:leading-[64px] text-[#18181B] mb-[100px]">Always <span className="text-[#3C2A97]">Lough</span> <span className="block">Whenever Its Possible</span></h2>
                 <Image src={OverviewImage} alt="OverviewImage.png" />

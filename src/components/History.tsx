@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export default function History() {
     return (
-        <div className={`${styles.Container} lg:py-[100px] lg:pb-[50px] py-[100px]`}>
+        <div id="history-page" className={`${styles.Container} lg:py-[160px] lg:pb-[50px] py-[100px]`}>
             <div className="lg:flex justify-between items-center">
                 <h2 className={`${styles.title}`}>WHO  <span className="text-[#3C2A97]">WE ARE</span></h2>
                 <h3 className={`${styles.subTitle}`}>Our Glorious<span className={`${styles.subTitles}`}>History</span></h3>

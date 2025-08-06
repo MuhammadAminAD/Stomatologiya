@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function KeyFeatures() {
     return (
-        <div className={`${styles.Container} py-[130px]`}>
+        <div id="special-page" className={`${styles.Container} py-[200px]`}>
             <div className="lg:flex justify-between items-center">
                 <h2 className={`${styles.title}`}>What Makes Us More <span className="block text-[#18181B]">Special</span></h2>
                 <h3 className={`${styles.subTitle} font-bold lg:!text-[56px]`}>KEY <span className={`${styles.subTitles} !inline !text-[#3C2A97]`}>FEATURE</span></h3>

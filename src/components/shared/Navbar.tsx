@@ -22,19 +22,31 @@ export default function Navbar() {
         }
     }, [activeBars])
 
+    function scrollToSection(id: string, offset = -20) {
+        const element = document.getElementById(id);
+        if (element) {
+            const y = element.getBoundingClientRect().top + window.pageYOffset + offset;
+            window.scrollTo({ top: y, behavior: "smooth" });
+        }
+    }
+
     return (
         <nav>
-            <div className={styles.Container}>
-                <div className={`flex items-center justify-between border-b border-[#BCBCBC] py-6`}>
+            <div className={`w-full fixed top-0 left-[50%] -translate-x-1/2 bg-gray-100 shadow-2xl z-50`}>
+                <div className={`flex justify-between items-center py-5 xl:px-[110px] md:px-[50px] px-[20px]`}>
                     <div className='w-full flex justify-between items-center'>
                         <Logo />
                         <button className='lg:hidden flex' onClick={() => setActiveBars(prev => !prev)}>{activeBars ? <XIcon className='z-15 w-8 h-8' /> : <BarsIcon className="w-8 h-8 text-gray-700" />}</button>
                     </div>
 
-                    <div className={`lg:flex hidden items-center gap-15 ${activeBars ? '!flex fixed inset-0 bg-gray-50 flex-col items-center justify-center z-10 px-[25px]' : 'hidden'}`}>
+                    <div className={`lg:flex hidden items-center gap-15 ${activeBars ? '!flex w-full min-h-screen fixed inset-0 bg-gray-50 flex-col items-center justify-center z-10 px-[25px]' : 'hidden'}`}>
                         <ul className='items-center justify-between gap-10 lg:flex'>
-                            {menuLink.map(({ id, name }) =>
-                                <li className='max-w-[150px] truncate overflow-hidden whitespace-nowrap block text-ellipsis  hover:border-b border-b-[#3C2A97] lg:hover:text-[#3C2A97] lg:py-1 py-3 cursor-pointer font-normal lg:text-md text-xl leading-6 text-[#52525B]' key={id}>{name}</li>
+                            {menuLink.map(({ id, name, slug }) =>
+                                <li
+                                    onClick={() => scrollToSection(slug)}
+                                    className='max-w-[150px] truncate overflow-hidden whitespace-nowrap block text-ellipsis  hover:border-b border-b-[#3C2A97] lg:hover:text-[#3C2A97] lg:py-1 py-3 cursor-pointer font-normal lg:text-md text-xl leading-6 text-[#52525B]'
+                                    key={id}>{name}
+                                </li>
                             )}
                         </ul>
 

@@ -1,9 +1,33 @@
 export const menuLink: IMenuList[] = [
-    { id: 0, name: "Main" },
-    { id: 1, name: "We provide" },
-    { id: 2, name: "Special" },
-    { id: 4, name: "Our history" },
-    { id: 5, name: "Consult" },
+    {
+        id: 0,
+        name: "Main",
+        slug: 'home-page'
+    },
+
+    {
+        id: 1,
+        name: "We provide",
+        slug: 'provide-page'
+    },
+
+    {
+        id: 2,
+        name: "Special",
+        slug: 'special-page'
+    },
+
+    {
+        id: 4,
+        name: "Our history",
+        slug: 'history-page'
+    },
+
+    {
+        id: 5,
+        name: "Consult",
+        slug: 'consult-page'
+    },
 ]
 
 

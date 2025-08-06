@@ -1,6 +1,7 @@
 export interface IMenuList {
     id: number,
-    name: string
+    name: string,
+    slug: string
 }
 
 export interface IServices {
