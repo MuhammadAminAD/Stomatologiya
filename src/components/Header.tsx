@@ -7,7 +7,7 @@ import { styles } from '@/styles/index.style'
 export default function Header() {
     return (
         <div id='home-page' className={`${styles.Container} mt-[135px]`}>
-            <div className='flex flex-col-reverse md:flex-row items-center justify-between gap-10 my-15'>
+            <div className='flex flex-col-reverse md:flex-row items-center justify-between gap-10 my-9'>
                 <div className='max-w-full lg:max-w-3/5'>
                     <h1 className='font-bold text-[20px] md:text-[28px] text-center md:text-left leading-8 lg:text-[50px] text-[#3C2A97] lg:leading-18 mb-4 lg:mb-6'>We Provide High
                         Quality Dental Services</h1>

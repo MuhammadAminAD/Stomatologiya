@@ -10,7 +10,7 @@ export default function Overview() {
                 <h2 className="font-semibold text-[26px] md:text-[50px] md:leading-[64px] text-[#18181B] mb-[100px]">Always <span className="text-[#3C2A97]">Lough</span> <span className="block">Whenever Its Possible</span></h2>
                 <Image src={OverviewImage} alt="OverviewImage.png" />
             </div>
-            <div className="lg:mt-0 mt-[40px] lg:pl-0 px-[30px]">
+            <div className="lg:mt-0 mt-[40px] lg:pl-[40px] px-[30px]">
                 <p className="max-w-[650px] font-normal text-[20px] leading-[34px] text-[#777777] mb-[150px]">
                     We also offer treatments that improve the appearance of your smile giving you the confidence boost you deserve. The process or our treatment below.
                 </p>
@@ -26,7 +26,7 @@ export default function Overview() {
                         <div className="flex flex-col gap-[24px]">
                             <h3 className={`${styles.overviewTitle}`}><Image src={OverviewIcon} alt="OverviewIcon" />Emergencies</h3>
                             <h3 className={`${styles.overviewTitle}`}><Image src={OverviewIcon} alt="OverviewIcon" />Dental implants</h3>
-                            <h3 className={`${styles.overviewTitle}`}><Image src={OverviewIcon} alt="OverviewIcon" />Children’s dentistry</h3>
+                            <h3 className={`${styles.overviewTitle}`}><Image src={OverviewIcon} alt="OverviewIcon" />Children's dentistry</h3>
                             <h3 className={`${styles.overviewTitle}`}><Image src={OverviewIcon} alt="OverviewIcon" />Telephone consultations</h3>
                         </div>
                     </div>

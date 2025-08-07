@@ -1,8 +1,8 @@
 'use client'
 
 import { styles } from "@/styles/index.style";
-import { Calendar } from "lucide-react";
-import { useState } from "react";
+import { Calendar, ChevronLeft, ChevronRight } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
 
 export default function AppoinmentForm() {
     const [name, setName] = useState<string>('')
@@ -11,6 +11,9 @@ export default function AppoinmentForm() {
     const [services, setServices] = useState<string>('')
     const [message, setMessage] = useState<string>('')
     const [agree, setAgree] = useState<boolean>(false)
+    const [showDatePicker, setShowDatePicker] = useState<boolean>(false)
+    const [currentMonth, setCurrentMonth] = useState<number>(new Date().getMonth())
+    const [currentYear, setCurrentYear] = useState<number>(new Date().getFullYear())
     const [errors, setErrors] = useState({
         name: '',
         phone: '',
@@ -19,6 +22,20 @@ export default function AppoinmentForm() {
         message: '',
         agree: '',
     })
+
+    const datePickerRef = useRef<HTMLDivElement>(null)
+
+    // Close date picker when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            if (datePickerRef.current && !datePickerRef.current.contains(event.target as Node)) {
+                setShowDatePicker(false)
+            }
+        }
+
+        document.addEventListener('mousedown', handleClickOutside)
+        return () => document.removeEventListener('mousedown', handleClickOutside)
+    }, [])
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -50,7 +67,7 @@ export default function AppoinmentForm() {
         }
 
         if (!services) {
-            newErrors.services = 'Select a doctor';
+            newErrors.services = 'Select a service';
             valid = false;
         }
 
@@ -94,6 +111,165 @@ export default function AppoinmentForm() {
         setPhone(formatted);
     };
 
+    const getDaysInMonth = (month: number, year: number) => {
+        return new Date(year, month + 1, 0).getDate();
+    };
+
+    const getFirstDayOfMonth = (month: number, year: number) => {
+        return new Date(year, month, 1).getDay();
+    };
+
+    const formatDate = (day: number, month: number, year: number) => {
+        const formattedMonth = String(month + 1).padStart(2, '0');
+        const formattedDay = String(day).padStart(2, '0');
+        return `${year}-${formattedMonth}-${formattedDay}`;
+    };
+
+    const parseDate = (dateString: string) => {
+        if (!dateString) return null;
+        const [year, month, day] = dateString.split('-').map(Number);
+        return { day, month: month - 1, year };
+    };
+
+    const isToday = (day: number, month: number, year: number) => {
+        const today = new Date();
+        return day === today.getDate() && 
+               month === today.getMonth() && 
+               year === today.getFullYear();
+    };
+
+    const isPastDate = (day: number, month: number, year: number) => {
+        const today = new Date();
+        const selectedDate = new Date(year, month, day);
+        today.setHours(0, 0, 0, 0);
+        return selectedDate < today;
+    };
+
+    const isSelectedDate = (day: number, month: number, year: number) => {
+        const parsed = parseDate(date);
+        if (!parsed) return false;
+        return day === parsed.day && month === parsed.month && year === parsed.year;
+    };
+
+    const handleDateSelect = (day: number) => {
+        if (isPastDate(day, currentMonth, currentYear)) return;
+        
+        const formattedDate = formatDate(day, currentMonth, currentYear);
+        setDate(formattedDate);
+        setShowDatePicker(false);
+    };
+
+    const navigateMonth = (direction: 'prev' | 'next') => {
+        if (direction === 'prev') {
+            if (currentMonth === 0) {
+                setCurrentMonth(11);
+                setCurrentYear(currentYear - 1);
+            } else {
+                setCurrentMonth(currentMonth - 1);
+            }
+        } else {
+            if (currentMonth === 11) {
+                setCurrentMonth(0);
+                setCurrentYear(currentYear + 1);
+            } else {
+                setCurrentMonth(currentMonth + 1);
+            }
+        }
+    };
+
+    const renderCalendar = () => {
+        const daysInMonth = getDaysInMonth(currentMonth, currentYear);
+        const firstDay = getFirstDayOfMonth(currentMonth, currentYear);
+        const monthNames = [
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
+        const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+        const days = [];
+        
+        // Empty cells for days before the first day of the month
+        for (let i = 0; i < firstDay; i++) {
+            days.push(<div key={`empty-${i}`} className="w-8 h-8"></div>);
+        }
+
+        // Days of the month
+        for (let day = 1; day <= daysInMonth; day++) {
+            const isPast = isPastDate(day, currentMonth, currentYear);
+            const isSelected = isSelectedDate(day, currentMonth, currentYear);
+            const isTodayDate = isToday(day, currentMonth, currentYear);
+
+            days.push(
+                <button
+                    key={day}
+                    type="button"
+                    onClick={() => handleDateSelect(day)}
+                    disabled={isPast}
+                    className={`
+                        w-8 h-8 text-sm rounded-full flex items-center justify-center transition-colors
+                        ${isPast 
+                            ? 'text-gray-300 cursor-not-allowed' 
+                            : 'text-gray-700 hover:bg-blue-100 cursor-pointer'
+                        }
+                        ${isSelected ? 'bg-[#3C2A97] text-white hover:bg-[#3C2A97]' : ''}
+                        ${isTodayDate && !isSelected ? 'bg-gray-100 font-semibold' : ''}
+                    `}
+                >
+                    {day}
+                </button>
+            );
+        }
+
+        return (
+            <div className="absolute top-full left-0 mt-2 bg-white border border-gray-300 rounded-lg shadow-lg p-4 z-50 min-w-[280px]">
+                {/* Header */}
+                <div className="flex items-center justify-between mb-4">
+                    <button
+                        type="button"
+                        onClick={() => navigateMonth('prev')}
+                        className="p-1 hover:bg-gray-100 rounded"
+                    >
+                        <ChevronLeft size={16} />
+                    </button>
+                    <h3 className="font-semibold text-gray-800">
+                        {monthNames[currentMonth]} {currentYear}
+                    </h3>
+                    <button
+                        type="button"
+                        onClick={() => navigateMonth('next')}
+                        className="p-1 hover:bg-gray-100 rounded"
+                    >
+                        <ChevronRight size={16} />
+                    </button>
+                </div>
+
+                {/* Day names */}
+                <div className="grid grid-cols-7 gap-1 mb-2">
+                    {dayNames.map(day => (
+                        <div key={day} className="text-xs font-medium text-gray-500 text-center p-1">
+                            {day}
+                        </div>
+                    ))}
+                </div>
+
+                {/* Calendar days */}
+                <div className="grid grid-cols-7 gap-1">
+                    {days}
+                </div>
+            </div>
+        );
+    };
+
+    const formatDisplayDate = (dateString: string) => {
+        if (!dateString) return '';
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-GB', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric'
+        });
+    };
+
     return (
         <form onSubmit={handleSubmit} action="" className="lg:mt-0 md:mt-[100px] mt-[50px]">
             <div className="md:grid grid-cols-2 gap-[25px] items-center">
@@ -128,22 +304,29 @@ export default function AppoinmentForm() {
                     )}
                 </div>
 
-                <div className={`${styles.appoinmentFormContent}`}>
+                <div className={`${styles.appoinmentFormContent}`} ref={datePickerRef}>
                     <label htmlFor="">Date</label>
-                    <input
-                        value={date}
-                        onChange={(e) => setDate(e.target.value)}
-                        className={`${styles.appoinmentInp}`}
-                        type="date"
-                        placeholder="DD/MM/YYYY"
-                    />
-                    <Calendar className="absolute top-[45px] right-[16px] w-5 h-5 text-gray-400" />
+                    <div className="relative">
+                        <input
+                            value={formatDisplayDate(date)}
+                            readOnly
+                            onClick={() => setShowDatePicker(!showDatePicker)}
+                            className={`${styles.appoinmentInp} cursor-pointer`}
+                            type="text"
+                            placeholder="DD/MM/YYYY"
+                        />
+                        <Calendar 
+                            className="absolute top-[12px] right-[16px] w-5 h-5 text-gray-400 cursor-pointer"
+                            onClick={() => setShowDatePicker(!showDatePicker)}
+                        />
+                        {showDatePicker && renderCalendar()}
+                    </div>
                     {errors.date && <p className={`${styles.error_message}`}>{errors.date}</p>}
                 </div>
 
                 <div className={`${styles.appoinmentFormContent}`}>
                     <label htmlFor="services" className={`${styles.appoinmentLabel}`}>
-                        Doctor
+                        Service
                     </label>
 
                     <div className="relative">
@@ -153,7 +336,7 @@ export default function AppoinmentForm() {
                             onChange={(e) => setServices(e.target.value)}
                             className={`${styles.appoinmentInp} appearance-none bg-transparent`}
                         >
-                            <option value="">Select a doctor</option>
+                            <option value="">Select a service</option>
                             <option value="Teeth Treatment">Teeth Treatment</option>
                             <option value="Extraction">Extraction</option>
                             <option value="Braces">Braces</option>
