@@ -6,20 +6,33 @@ import { styles } from '@/styles/index.style'
 
 export default function Header() {
     return (
-        <div id='home-page' className={`${styles.Container} mt-[135px]`}>
-            <div className='flex flex-col-reverse md:flex-row items-center justify-between gap-10 my-9'>
-                <div className='max-w-full lg:max-w-3/5'>
-                    <h1 className='font-bold text-[20px] md:text-[28px] text-center md:text-left leading-8 lg:text-[50px] text-[#3C2A97] lg:leading-18 mb-4 lg:mb-6'>We Provide High
-                        Quality Dental Services</h1>
-                    <p className='text-md lg:text-[20px] text-[#777] max-w-7/10 text-center md:text-left mx-auto md:mx-0'>Appropriately embrace transparent materials via turnkey niche markets. </p>
-                    <a href="tel:+99999999999">
-                        <button className='w-full lg:w-fit py-4 px-10 rounded-lg bg-[#3C2A97] text-white font-bold mt-8 lg:mt-16 cursor-pointer border-2 border-[#3C2A97] flex items-center justify-center gap-2 hover:bg-transparent hover:text-black transition-all duration-500'>
-                            <PhoneIcon />Call Now
-                        </button>
-                    </a>
+        <div id='home-page' className={`${styles.Container} mt-[130px]`}>
+            <div className='flex flex-col-reverse md:flex-row items-center justify-between gap-10 py-12'>
+                <div className='w-full lg:max-w-[60%] px-4 md:px-0'>
+                    <h1 className='font-bold text-[28px] md:text-[36px] text-center md:text-left leading-[1.2] lg:text-[50px] text-[#3C2A97] lg:leading-[1.1] mb-4 lg:mb-6'>
+                        We Provide High Quality Dental Services
+                    </h1>
+                    <p className='text-base lg:text-[20px] text-[#777] max-w-[70%] text-center md:text-left mx-auto md:mx-0 leading-relaxed mb-6 lg:mb-8'>
+                        Appropriately embrace transparent materials via turnkey niche markets.
+                    </p>
+                    <div className='flex justify-center md:justify-start'>
+                        <a href="tel:+99999999999" className='inline-block'>
+                            <button className='py-3 px-8 rounded-lg bg-[#3C2A97] text-white font-semibold cursor-pointer border-2 border-[#3C2A97] flex items-center justify-center gap-3 hover:bg-transparent hover:text-[#3C2A97] transition-all duration-300 text-sm min-w-[160px]'>
+                                <PhoneIcon />
+                                Call Now
+                            </button>
+                        </a>
+                    </div>
                 </div>
-                <div>
-                    <Image src={banner} alt='dentistry' />
+                <div className='w-full md:w-auto flex justify-center md:justify-end'>
+                    <div className='max-w-[400px] md:max-w-none'>
+                        <Image
+                            src={banner}
+                            alt='High quality dental services'
+                            priority
+                            className='w-full h-auto'
+                        />
+                    </div>
                 </div>
             </div>
         </div>
