@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Nunito } from "next/font/google";
 import "./globals.css";
-
+import "../constants/i18n";
+import I18nProvider from "@/components/I18nProvider";
 const nunito = Nunito({
   variable: "--font-nunito",
   subsets: ["latin"],
@@ -19,11 +20,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={` ${nunito.variable} antialiased`}
-      >
+      <body className={` ${nunito.variable} antialiased`}>
+        
+      <I18nProvider>
         {children}
-      </body>
+      </I18nProvider>
+        </body>
     </html>
   );
 }
