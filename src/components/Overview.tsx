@@ -7,12 +7,14 @@ export default function Overview() {
     return (
         <div className="w-full flex justify-center">
             <div id="provide-page" className="w-full max-w-[1400px] lg:flex gap-[60px] items-center">
-                <div className="lg:pt-[116px] py-[50px] px-[20px] lg:px-[108px] lg:pb-[104px] bg-[#F8FAFC] rounded-br-[136px]">
+                <div className="lg:pt-[116px] py-[50px] px-[20px] lg:px-[108px] lg:pb-[104px] bg-[#F8FAFC] rounded-br-[136px] rounded-bl-[136px]">
                     <h2 className="font-semibold text-[26px] md:text-[50px] md:leading-[64px] text-[#18181B] mb-[100px] text-center lg:text-left">
                         Always <span className="text-[#3C2A97]">Lough</span> <span className="block">Whenever Its Possible</span>
                     </h2>
                     <div className="flex justify-center lg:justify-start">
-                        <Image src={OverviewImage} alt="OverviewImage.png" />
+                        <div className="w-[80%] max-w-[400px]">
+                            <Image src={OverviewImage} alt="OverviewImage.png" className="w-full h-auto" />
+                        </div>
                     </div>
                 </div>
                 <div className="lg:mt-0 mt-[40px] lg:pl-[40px] px-[30px] flex flex-col items-center lg:items-start">

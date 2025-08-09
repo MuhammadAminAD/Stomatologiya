@@ -27,7 +27,7 @@ export const menuLink: IMenuList[] = [
         id: 5,
         name: "Consult",
         slug: 'consult-page'
-    },
+    }
 ]
 
 

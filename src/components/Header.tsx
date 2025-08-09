@@ -6,9 +6,9 @@ import { styles } from '@/styles/index.style'
 
 export default function Header() {
     return (
-        <div id='home-page' className={`${styles.Container} mt-[130px]`}>
-            <div className='flex flex-col-reverse md:flex-row items-center justify-between gap-10 py-12'>
-                <div className='w-full lg:max-w-[60%] px-4 md:px-0'>
+        <div id='home-page' className={`${styles.Container} mt-[110px]`}>
+            <div className='flex flex-col-reverse md:flex-row items-center justify-between gap-10'>
+                <div className='w-full lg:max-w-[50%] px-4 md:px-0'>
                     <h1 className='font-bold text-[28px] md:text-[36px] text-center md:text-left leading-[1.2] lg:text-[50px] text-[#3C2A97] lg:leading-[1.1] mb-4 lg:mb-6'>
                         We Provide High Quality Dental Services
                     </h1>
@@ -24,13 +24,15 @@ export default function Header() {
                         </a>
                     </div>
                 </div>
-                <div className='w-full md:w-auto flex justify-center md:justify-end'>
-                    <div className='max-w-[400px] md:max-w-none'>
+                <div className='w-full md:w-auto flex justify-center md:justify-end lg:max-w-[50%]'>
+                    <div className='w-full flex justify-center'>
                         <Image
                             src={banner}
                             alt='High quality dental services'
                             priority
-                            className='w-full h-auto'
+                            width={500}
+                            height={400}
+                            className='w-auto h-auto max-w-[400px] md:max-w-[500px] lg:max-w-[600px]'
                         />
                     </div>
                 </div>

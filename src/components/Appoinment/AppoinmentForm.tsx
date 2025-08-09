@@ -1,35 +1,40 @@
 'use client'
 
 import { styles } from "@/styles/index.style";
-import { Calendar, ChevronLeft, ChevronRight } from "lucide-react";
+import { Calendar, ChevronLeft, ChevronRight, Clock } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 
 export default function AppoinmentForm() {
     const [name, setName] = useState<string>('')
     const [phone, setPhone] = useState<string>('')
     const [date, setDate] = useState<string>('')
+    const [time, setTime] = useState<string>('')
     const [services, setServices] = useState<string>('')
     const [message, setMessage] = useState<string>('')
-    const [agree, setAgree] = useState<boolean>(false)
     const [showDatePicker, setShowDatePicker] = useState<boolean>(false)
+    const [showTimePicker, setShowTimePicker] = useState<boolean>(false)
     const [currentMonth, setCurrentMonth] = useState<number>(new Date().getMonth())
     const [currentYear, setCurrentYear] = useState<number>(new Date().getFullYear())
     const [errors, setErrors] = useState({
         name: '',
         phone: '',
         date: '',
+        time: '',
         services: '',
         message: '',
-        agree: '',
     })
 
     const datePickerRef = useRef<HTMLDivElement>(null)
+    const timePickerRef = useRef<HTMLDivElement>(null)
 
     // Close date picker when clicking outside
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (datePickerRef.current && !datePickerRef.current.contains(event.target as Node)) {
                 setShowDatePicker(false)
+            }
+            if (timePickerRef.current && !timePickerRef.current.contains(event.target as Node)) {
+                setShowTimePicker(false)
             }
         }
 
@@ -45,9 +50,9 @@ export default function AppoinmentForm() {
             name: '',
             phone: '',
             date: '',
+            time: '',
             services: '',
             message: '',
-            agree: '',
         };
 
         if (!name.trim()) {
@@ -66,13 +71,13 @@ export default function AppoinmentForm() {
             valid = false;
         }
 
-        if (!services) {
-            newErrors.services = 'Select a service';
+        if (!time) {
+            newErrors.time = 'Time is required';
             valid = false;
         }
 
-        if (!agree) {
-            newErrors.agree = 'You must agree to terms';
+        if (!services) {
+            newErrors.services = 'Select a service';
             valid = false;
         }
 
@@ -84,6 +89,7 @@ export default function AppoinmentForm() {
                 name,
                 phone: finalPhone,
                 date,
+                time,
                 services,
                 message,
             });
@@ -157,6 +163,9 @@ export default function AppoinmentForm() {
         const formattedDate = formatDate(day, currentMonth, currentYear);
         setDate(formattedDate);
         setShowDatePicker(false);
+        
+        // Reset time when date changes
+        setTime('');
     };
 
     const navigateMonth = (direction: 'prev' | 'next') => {
@@ -175,6 +184,74 @@ export default function AppoinmentForm() {
                 setCurrentMonth(currentMonth + 1);
             }
         }
+    };
+
+    const generateTimeSlots = () => {
+        const slots = [];
+        const now = new Date();
+        const selectedDate = date ? new Date(date) : null;
+        const isSelectedToday = selectedDate && 
+            selectedDate.toDateString() === now.toDateString();
+
+        // Generate time slots from 9:00 AM to 10:00 PM (every 30 minutes)
+        for (let hour = 9; hour <= 22; hour++) {
+            for (let minute = 0; minute < 60; minute += 30) {
+                if (hour === 22 && minute > 0) break; // Stop at 10:00 PM
+                
+                const timeSlot = `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
+                
+                // Check if this time slot is in the past for today
+                let isPastTime = false;
+                if (isSelectedToday) {
+                    const slotTime = new Date();
+                    slotTime.setHours(hour, minute, 0, 0);
+                    isPastTime = slotTime <= now;
+                }
+                
+                slots.push({
+                    value: timeSlot,
+                    label: timeSlot,
+                    disabled: isPastTime
+                });
+            }
+        }
+        
+        return slots;
+    };
+
+    const handleTimeSelect = (selectedTime: string) => {
+        setTime(selectedTime);
+        setShowTimePicker(false);
+    };
+
+    const renderTimePicker = () => {
+        const timeSlots = generateTimeSlots();
+
+        return (
+            <div className="absolute top-full left-0 mt-2 bg-white border border-gray-300 rounded-lg shadow-lg p-4 z-50 max-w-[280px] max-h-[300px] overflow-y-auto">
+                <h3 className="font-semibold text-gray-800 mb-3">Select Time</h3>
+                <div className="grid grid-cols-3 gap-2">
+                    {timeSlots.map((slot) => (
+                        <button
+                            key={slot.value}
+                            type="button"
+                            onClick={() => !slot.disabled && handleTimeSelect(slot.value)}
+                            disabled={slot.disabled}
+                            className={`
+                                px-3 py-2 text-sm rounded-md transition-colors
+                                ${slot.disabled 
+                                    ? 'text-gray-300 cursor-not-allowed bg-gray-50' 
+                                    : 'text-gray-700 hover:bg-blue-100 cursor-pointer border border-gray-200'
+                                }
+                                ${time === slot.value ? 'bg-[#3C2A97] text-white hover:bg-[#3C2A97] border-[#3C2A97]' : ''}
+                            `}
+                        >
+                            {slot.label}
+                        </button>
+                    ))}
+                </div>
+            </div>
+        );
     };
 
     const renderCalendar = () => {
@@ -324,7 +401,28 @@ export default function AppoinmentForm() {
                     {errors.date && <p className={`${styles.error_message}`}>{errors.date}</p>}
                 </div>
 
-                <div className={`${styles.appoinmentFormContent}`}>
+                <div className={`${styles.appoinmentFormContent}`} ref={timePickerRef}>
+                    <label htmlFor="">Time</label>
+                    <div className="relative">
+                        <input
+                            value={time}
+                            readOnly
+                            onClick={() => date && setShowTimePicker(!showTimePicker)}
+                            className={`${styles.appoinmentInp} cursor-pointer ${!date ? 'opacity-50 cursor-not-allowed' : ''}`}
+                            type="text"
+                            placeholder="Select time"
+                            disabled={!date}
+                        />
+                        <Clock 
+                            className="absolute top-[12px] right-[16px] w-5 h-5 text-gray-400 cursor-pointer"
+                            onClick={() => date && setShowTimePicker(!showTimePicker)}
+                        />
+                        {showTimePicker && renderTimePicker()}
+                    </div>
+                    {errors.time && <p className={`${styles.error_message}`}>{errors.time}</p>}
+                </div>
+
+                <div className={`${styles.appoinmentFormContent} md:col-span-2`}>
                     <label htmlFor="services" className={`${styles.appoinmentLabel}`}>
                         Service
                     </label>
@@ -356,20 +454,11 @@ export default function AppoinmentForm() {
                 <textarea
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
-                    className="py-[12px] px-[16px] border-1 border-[#52525B40] font-normal text-[16px] leading-[24px] text-[#52525B] rounded-[8px] resize-none lg:min-h-[120px] xl:min-h-[144px] outline-none"
+                    className="py-[12px] px-[16px] border-1 border-[#52525B40] font-normal text-[16px] leading-[24px] text-[#52525B] rounded-[8px] resize-none lg:min-h-[120px] xl:min-h-[144px] outline-none w-full"
                     placeholder="Include a message...">
                 </textarea>
             </div>
-            <div className="flex gap-[12px] mt-[20px] xl:mt-[32px]">
-                <input
-                    className="w-[20px] h-[20px] cursor-pointer"
-                    type="checkbox"
-                    checked={agree}
-                    onChange={(e) => setAgree(e.target.checked)}
-                />
-                <label className="font-normal text-[16px] leading-[24px] text-[#52525B]" htmlFor="">You agree to our friendly privacy policy.</label>
-            </div>
-            {errors.agree && <p className={`${styles.error_message}`}>{errors.agree}</p>}
+            
             <button className="w-full py-[16px] bg-[#3C2A97] rounded-[8px] cursor-pointer font-medium text-[18px] leading-[26px] text-[#FFFFFF] border-2 border-[#3C2A97] mt-[15px] xl:mt-[24px] hover:bg-transparent hover:text-black transition-all duration-500">Confirm Appoinment</button>
         </form>
     )

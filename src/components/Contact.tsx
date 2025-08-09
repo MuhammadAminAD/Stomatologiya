@@ -49,7 +49,7 @@ export default function Contact() {
     };
 
     return (
-        <div className="w-full bg-[#F8FAFC] py-10 md:py-15 lg:py-[96px] relative">
+        <div className="w-full bg-[#F8FAFC] py-10 md:py-15 lg:py-[96px] relative" id="consult-page">
             <div className={styles.Container}>
                 <div className={`rounded-[20px] bg-[#3C2A97] py-5 md:py-10 lg:py-[82px] flex flex-col items-center text-center`}>
                     <h2 className="font-semibold text-[20px] md:text-[42px] text-[#fff] mb-5 
