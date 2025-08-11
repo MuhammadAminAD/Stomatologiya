@@ -1,3 +1,123 @@
 {
-  "banner": "We Provide High Quality Dental Services"
+  "banner": "We provide high-quality dental services using modern equipment and caring for your smile",
+  "Main": "Main",
+  "Services": "We provide",
+  "Advantages": "Advantages",
+  "About us": "About us",
+  "Contact": "Contact",
+  "Appointment": "Appointment",
+  "Call Now": "Call Now",
+  "Professional dentistry": "Professional dentistry",
+  "How to contact us": "How to contact us?",
+  "Just follow these simple steps": "Just follow these simple steps",
+  "Call for appointment": "Call for appointment",
+  "Get a Date & Serial": "Get a Date & Serial",
+  "Consult Your dentist": "Consult Your dentist",
+  "Bright Smiles, Healthy Lives": "Bright Smiles Healthy Lives",
+  "From routine check ups to advanced cosmetic treatments, we offer complete dental care for the whole family. Your smile is safe in our hands": "From routine check ups to advanced cosmetic treatments, we offer complete dental care for the whole family. Your smile is safe in our hands",
+  "Choose a service": "Choose a service",
+  "Tooth treatment": "Tooth treatment",
+  "Extraction": "Extraction",
+  "Braces": "Braces",
+  "Implantation": "Implantation",
+  "Dental prosthetics": "Dental prosthetics",
+  "Veneers": "Veneers",
+  "Any additional information": "Any additional information",
+  "keyFeatures": {
+    "mainTitle": "What Makes Us More",
+    "specialText": "Special",
+    "keyText": "KEY",
+    "featureText": "FEATURE"
+  },
+  "features": {
+    "laserTechnology": {
+      "title": "Laser Technology",
+      "desc": "Worlds most advanced Diode Laser. Your treatment experience will be relaxing & smooth."
+    },
+    "advancedEquipment": {
+      "title": "Advanced Equipment",
+      "desc": "State-of-the-art dental equipment ensuring precise and comfortable treatments."
+    },
+    "expertCare": {
+      "title": "Expert Care",
+      "desc": "Highly qualified professionals providing personalized dental care solutions."
+    },
+    "digitalDentistry": {
+      "title": "Digital Dentistry",
+      "desc": "Modern digital solutions for accurate diagnosis and treatment planning."
+    },
+    "painFreeTreatment": {
+      "title": "Pain-Free Treatment",
+      "desc": "Comfortable procedures with minimal discomfort using latest techniques."
+    },
+    "qualityMaterials": {
+      "title": "Quality Materials",
+      "desc": "Premium quality materials ensuring long-lasting and durable results."
+    }
+  },
+  "banner-page": {
+    "title": {
+      "part1": "Smile with Confidence",
+      "part2": "Live with Joy"
+    },
+    "description": "We offer complete dental care — from routine check-ups to advanced smile makeovers — with a focus on comfort, quality, and trust. Using modern technology and gentle techniques, we make every visit stress-free and effective.",
+    "appointmentButton": "Make An Appointment"
+  },
+  "WHO WE ARE": {
+    "part1": "WHO",
+    "part2": "WE ARE"
+  },
+  "Our Dental Clinic": "About Our Clinic",
+  "About Us": "About Us",
+  "About Us Description": "Ikromovich Dental Clinic in Tashkent offers modern, high-quality dental care in a friendly and comfortable setting. Our experienced team provides a full range of services — from check-ups and cleanings to implants and cosmetic treatments — using the latest equipment and techniques. We focus on gentle, precise care to keep your smile healthy and beautiful",
+  "MAKE AN": "MAKE AN",
+  "APPOINTMENT": "APPOINTMENT",
+  "Doctor": "Doctor",
+  "Name": "Name",
+  "Full name": "Full name",
+  "Phone": "Phone",
+  "Date": "Date",
+  "Time": "Time",
+  "Service": "Service",
+  "Message": "Message",
+  "DD/MM/YYYY": "DD/MM/YYYY",
+  "Select time": "Select time",
+  "Select Time": "Select Time",
+  "Select a service": "Select a service",
+  "Include a message...": "Include a message...",
+  "Confirm Appointment": "Confirm Appointment",
+  "Name is required": "Name is required",
+  "Phone must be in format 99-999-99-99": "Phone must be in format 99-999-99-99",
+  "Date is required": "Date is required",
+  "Time is required": "Time is required",
+  "January": "January",
+  "February": "February",
+  "March": "March",
+  "April": "April",
+  "May": "May",
+  "June": "June",
+  "July": "July",
+  "August": "August",
+  "September": "September",
+  "October": "October",
+  "November": "November",
+  "December": "December",
+  "Sun": "Sun",
+  "Mon": "Mon",
+  "Tue": "Tue",
+  "Wed": "Wed",
+  "Thu": "Thu",
+  "Fri": "Fri",
+  "Sat": "Sat",
+  "footer": {
+    "welcoming": "We are welcoming you",
+    "visitClinic": "Want to visit our clinic?",
+    "schedule": "Monday - Saturday",
+    "hours": "9:00 - 22:00",
+    "importantLinks": "Important links",
+    "sayHello": "Say hello to us",
+    "address": "Address",
+    "fullAddress": "Yangi Hayot District, Yangi Chosh Tepa Neighborhood, O'zar Street 6"
+  },
+  "Appointment confirmed successfully!": "Appointment confirmed successfully!"
 }

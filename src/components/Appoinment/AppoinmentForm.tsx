@@ -1,10 +1,11 @@
 'use client'
-
 import { styles } from "@/styles/index.style";
 import { Calendar, ChevronLeft, ChevronRight, Clock } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
+import { useTranslation } from 'react-i18next';
 
 export default function AppoinmentForm() {
+    const { t } = useTranslation();
     const [name, setName] = useState<string>('')
     const [phone, setPhone] = useState<string>('')
     const [date, setDate] = useState<string>('')
@@ -15,17 +16,14 @@ export default function AppoinmentForm() {
     const [showTimePicker, setShowTimePicker] = useState<boolean>(false)
     const [currentMonth, setCurrentMonth] = useState<number>(new Date().getMonth())
     const [currentYear, setCurrentYear] = useState<number>(new Date().getFullYear())
-    const [errors, setErrors] = useState({
-        name: '',
-        phone: '',
-        date: '',
-        time: '',
-        services: '',
-        message: '',
-    })
-
+    const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
+    const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
     const datePickerRef = useRef<HTMLDivElement>(null)
     const timePickerRef = useRef<HTMLDivElement>(null)
+
+    // Telegram configuration
+    const TELEGRAM_BOT_TOKEN = '8291042053:AAH8V3Td5bNOgn-ScXbZSPw5dChaCXIZ3aA';
+    const TELEGRAM_CHAT_ID = '-4812734695';
 
     // Close date picker when clicking outside
     useEffect(() => {
@@ -37,69 +35,108 @@ export default function AppoinmentForm() {
                 setShowTimePicker(false)
             }
         }
-
         document.addEventListener('mousedown', handleClickOutside)
         return () => document.removeEventListener('mousedown', handleClickOutside)
     }, [])
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const sendToTelegram = async (formData: any) => {
+        const telegramMessage = `
+🦷 *Новая запись на прием*
+
+👤 *Имя:* ${formData.name}
+📞 *Телефон:* ${formData.phone}
+📅 *Дата:* ${formData.date}
+⏰ *Время:* ${formData.time}
+🏥 *Услуга:* ${formData.services}
+💬 *Сообщение:* ${formData.message || 'Без дополнительного сообщения'}
+        `.trim();
+
+        try {
+            const response = await fetch(
+                `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`,
+                {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        chat_id: TELEGRAM_CHAT_ID,
+                        text: telegramMessage,
+                        parse_mode: 'Markdown',
+                    }),
+                }
+            );
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                console.error('Telegram API error:', errorData);
+                throw new Error('Failed to send message to Telegram');
+            }
+
+            return await response.json();
+        } catch (error) {
+            console.error('Error sending to Telegram:', error);
+            throw error;
+        }
+    };
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setIsSubmitting(true);
+        setSubmitStatus('idle');
 
-        let valid = true;
-        const newErrors = {
-            name: '',
-            phone: '',
-            date: '',
-            time: '',
-            services: '',
-            message: '',
-        };
-
-        if (!name.trim()) {
-            newErrors.name = 'Name is required';
-            valid = false;
+        // Basic validation without error messages
+        if (!name.trim() || !phone.trim() || !date || !time || !services) {
+            setSubmitStatus('error');
+            setIsSubmitting(false);
+            setTimeout(() => setSubmitStatus('idle'), 5000);
+            return;
         }
 
         const unformattedPhone = phone.replace(/\D/g, "");
         if (unformattedPhone.length !== 9) {
-            newErrors.phone = 'Phone must be in format 99-999-99-99';
-            valid = false;
+            setSubmitStatus('error');
+            setIsSubmitting(false);
+            setTimeout(() => setSubmitStatus('idle'), 5000);
+            return;
         }
 
-        if (!date) {
-            newErrors.date = 'Date is required';
-            valid = false;
+        const finalPhone = "+998" + unformattedPhone;
+        const formData = {
+            name,
+            phone: finalPhone,
+            date,
+            time,
+            services,
+            message,
+        };
+
+        try {
+            await sendToTelegram(formData);
+            setSubmitStatus('success');
+
+            // Reset form after successful submission
+            setTimeout(() => {
+                setName('');
+                setPhone('');
+                setDate('');
+                setTime('');
+                setServices('');
+                setMessage('');
+                setSubmitStatus('idle');
+            }, 3000);
+
+        } catch (error) {
+            setSubmitStatus('error');
+            setTimeout(() => setSubmitStatus('idle'), 5000);
         }
 
-        if (!time) {
-            newErrors.time = 'Time is required';
-            valid = false;
-        }
-
-        if (!services) {
-            newErrors.services = 'Select a service';
-            valid = false;
-        }
-
-        setErrors(newErrors);
-
-        if (valid) {
-            const finalPhone = "+998" + unformattedPhone;
-            console.log('Form submitted', {
-                name,
-                phone: finalPhone,
-                date,
-                time,
-                services,
-                message,
-            });
-        }
+        setIsSubmitting(false);
     };
 
     const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         let input = e.target.value.replace(/\D/g, "");
         if (input.length > 9) input = input.slice(0, 9);
-
         let formatted = "";
         if (input.length > 0) {
             formatted += "(" + input.substring(0, 2);
@@ -113,7 +150,6 @@ export default function AppoinmentForm() {
         if (input.length >= 8) {
             formatted += "-" + input.substring(7, 9);
         }
-
         setPhone(formatted);
     };
 
@@ -139,9 +175,9 @@ export default function AppoinmentForm() {
 
     const isToday = (day: number, month: number, year: number) => {
         const today = new Date();
-        return day === today.getDate() && 
-               month === today.getMonth() && 
-               year === today.getFullYear();
+        return day === today.getDate() &&
+            month === today.getMonth() &&
+            year === today.getFullYear();
     };
 
     const isPastDate = (day: number, month: number, year: number) => {
@@ -159,11 +195,11 @@ export default function AppoinmentForm() {
 
     const handleDateSelect = (day: number) => {
         if (isPastDate(day, currentMonth, currentYear)) return;
-        
+
         const formattedDate = formatDate(day, currentMonth, currentYear);
         setDate(formattedDate);
         setShowDatePicker(false);
-        
+
         // Reset time when date changes
         setTime('');
     };
@@ -190,16 +226,16 @@ export default function AppoinmentForm() {
         const slots = [];
         const now = new Date();
         const selectedDate = date ? new Date(date) : null;
-        const isSelectedToday = selectedDate && 
+        const isSelectedToday = selectedDate &&
             selectedDate.toDateString() === now.toDateString();
 
         // Generate time slots from 9:00 AM to 10:00 PM (every 30 minutes)
         for (let hour = 9; hour <= 22; hour++) {
             for (let minute = 0; minute < 60; minute += 30) {
                 if (hour === 22 && minute > 0) break; // Stop at 10:00 PM
-                
+
                 const timeSlot = `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
-                
+
                 // Check if this time slot is in the past for today
                 let isPastTime = false;
                 if (isSelectedToday) {
@@ -207,7 +243,7 @@ export default function AppoinmentForm() {
                     slotTime.setHours(hour, minute, 0, 0);
                     isPastTime = slotTime <= now;
                 }
-                
+
                 slots.push({
                     value: timeSlot,
                     label: timeSlot,
@@ -215,7 +251,7 @@ export default function AppoinmentForm() {
                 });
             }
         }
-        
+
         return slots;
     };
 
@@ -226,10 +262,9 @@ export default function AppoinmentForm() {
 
     const renderTimePicker = () => {
         const timeSlots = generateTimeSlots();
-
         return (
             <div className="absolute top-full left-0 mt-2 bg-white border border-gray-300 rounded-lg shadow-lg p-4 z-50 max-w-[280px] max-h-[300px] overflow-y-auto">
-                <h3 className="font-semibold text-gray-800 mb-3">Select Time</h3>
+                <h3 className="font-semibold text-gray-800 mb-3">{t('Select Time')}</h3>
                 <div className="grid grid-cols-3 gap-2">
                     {timeSlots.map((slot) => (
                         <button
@@ -239,8 +274,8 @@ export default function AppoinmentForm() {
                             disabled={slot.disabled}
                             className={`
                                 px-3 py-2 text-sm rounded-md transition-colors
-                                ${slot.disabled 
-                                    ? 'text-gray-300 cursor-not-allowed bg-gray-50' 
+                                ${slot.disabled
+                                    ? 'text-gray-300 cursor-not-allowed bg-gray-50'
                                     : 'text-gray-700 hover:bg-blue-100 cursor-pointer border border-gray-200'
                                 }
                                 ${time === slot.value ? 'bg-[#3C2A97] text-white hover:bg-[#3C2A97] border-[#3C2A97]' : ''}
@@ -257,14 +292,15 @@ export default function AppoinmentForm() {
     const renderCalendar = () => {
         const daysInMonth = getDaysInMonth(currentMonth, currentYear);
         const firstDay = getFirstDayOfMonth(currentMonth, currentYear);
+
         const monthNames = [
-            "January", "February", "March", "April", "May", "June",
-            "July", "August", "September", "October", "November", "December"
+            t("January"), t("February"), t("March"), t("April"), t("May"), t("June"),
+            t("July"), t("August"), t("September"), t("October"), t("November"), t("December")
         ];
-        const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+        const dayNames = [t("Sun"), t("Mon"), t("Tue"), t("Wed"), t("Thu"), t("Fri"), t("Sat")];
 
         const days = [];
-        
+
         // Empty cells for days before the first day of the month
         for (let i = 0; i < firstDay; i++) {
             days.push(<div key={`empty-${i}`} className="w-8 h-8"></div>);
@@ -284,8 +320,8 @@ export default function AppoinmentForm() {
                     disabled={isPast}
                     className={`
                         w-8 h-8 text-sm rounded-full flex items-center justify-center transition-colors
-                        ${isPast 
-                            ? 'text-gray-300 cursor-not-allowed' 
+                        ${isPast
+                            ? 'text-gray-300 cursor-not-allowed'
                             : 'text-gray-700 hover:bg-blue-100 cursor-pointer'
                         }
                         ${isSelected ? 'bg-[#3C2A97] text-white hover:bg-[#3C2A97]' : ''}
@@ -349,21 +385,29 @@ export default function AppoinmentForm() {
 
     return (
         <form onSubmit={handleSubmit} action="" className="lg:mt-0 md:mt-[100px] mt-[50px]">
+            {/* Success Message */}
+            {submitStatus === 'success' && (
+                <div className="bg-green-100 text-green-800 p-4 rounded-lg mb-4">
+                    <p className="font-semibold">{t('Appointment confirmed successfully!')}</p>
+                </div>
+            )}
+
             <div className="md:grid grid-cols-2 gap-[25px] items-center">
                 <div className={`${styles.appoinmentFormContent}`}>
-                    <label className={`${styles.appoinmentLabel}`} htmlFor="">Name</label>
+                    <label className={`${styles.appoinmentLabel}`} htmlFor="">{t('Name')}</label>
                     <input
                         className={`${styles.appoinmentInp}`}
                         type="text"
-                        placeholder="Full name"
+                        placeholder="Полное имя"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
+                        disabled={isSubmitting}
+                        required
                     />
-                    {errors.name && <p className={`${styles.error_message}`}>{errors.name}</p>}
                 </div>
 
                 <div className={`${styles.appoinmentFormContent}`}>
-                    <label htmlFor="">Phone</label>
+                    <label htmlFor="">{t('Phone')}</label>
                     <span className="absolute top-[45px] left-[16px]">+998</span>
                     <input
                         value={phone}
@@ -372,94 +416,98 @@ export default function AppoinmentForm() {
                         type="text"
                         placeholder="(99) 999-99-99"
                         inputMode="numeric"
+                        disabled={isSubmitting}
+                        required
                     />
-
-                    {errors.phone && (
-                        <p className={`${styles.error_message}`}>
-                            {errors.phone}
-                        </p>
-                    )}
                 </div>
 
                 <div className={`${styles.appoinmentFormContent}`} ref={datePickerRef}>
-                    <label htmlFor="">Date</label>
+                    <label htmlFor="">{t('Date')}</label>
                     <div className="relative">
                         <input
                             value={formatDisplayDate(date)}
                             readOnly
-                            onClick={() => setShowDatePicker(!showDatePicker)}
-                            className={`${styles.appoinmentInp} cursor-pointer`}
+                            onClick={() => !isSubmitting && setShowDatePicker(!showDatePicker)}
+                            className={`${styles.appoinmentInp} cursor-pointer ${isSubmitting ? 'opacity-50' : ''}`}
                             type="text"
-                            placeholder="DD/MM/YYYY"
+                            placeholder="ДД/ММ/ГГГГ"
+                            disabled={isSubmitting}
+                            required
                         />
-                        <Calendar 
+                        <Calendar
                             className="absolute top-[12px] right-[16px] w-5 h-5 text-gray-400 cursor-pointer"
-                            onClick={() => setShowDatePicker(!showDatePicker)}
+                            onClick={() => !isSubmitting && setShowDatePicker(!showDatePicker)}
                         />
-                        {showDatePicker && renderCalendar()}
+                        {showDatePicker && !isSubmitting && renderCalendar()}
                     </div>
-                    {errors.date && <p className={`${styles.error_message}`}>{errors.date}</p>}
                 </div>
 
                 <div className={`${styles.appoinmentFormContent}`} ref={timePickerRef}>
-                    <label htmlFor="">Time</label>
+                    <label htmlFor="">{t('Time')}</label>
                     <div className="relative">
                         <input
                             value={time}
                             readOnly
-                            onClick={() => date && setShowTimePicker(!showTimePicker)}
-                            className={`${styles.appoinmentInp} cursor-pointer ${!date ? 'opacity-50 cursor-not-allowed' : ''}`}
+                            onClick={() => date && !isSubmitting && setShowTimePicker(!showTimePicker)}
+                            className={`${styles.appoinmentInp} cursor-pointer ${(!date || isSubmitting) ? 'opacity-50 cursor-not-allowed' : ''}`}
                             type="text"
-                            placeholder="Select time"
-                            disabled={!date}
+                            placeholder={t('Select Time')}
+                            disabled={!date || isSubmitting}
+                            required
                         />
-                        <Clock 
+                        <Clock
                             className="absolute top-[12px] right-[16px] w-5 h-5 text-gray-400 cursor-pointer"
-                            onClick={() => date && setShowTimePicker(!showTimePicker)}
+                            onClick={() => date && !isSubmitting && setShowTimePicker(!showTimePicker)}
                         />
-                        {showTimePicker && renderTimePicker()}
+                        {showTimePicker && !isSubmitting && renderTimePicker()}
                     </div>
-                    {errors.time && <p className={`${styles.error_message}`}>{errors.time}</p>}
                 </div>
 
                 <div className={`${styles.appoinmentFormContent} md:col-span-2`}>
                     <label htmlFor="services" className={`${styles.appoinmentLabel}`}>
-                        Service
+                        {t('Service')}
                     </label>
-
                     <div className="relative">
                         <select
                             id="services"
                             value={services}
                             onChange={(e) => setServices(e.target.value)}
-                            className={`${styles.appoinmentInp} appearance-none bg-transparent`}
+                            className={`${styles.appoinmentInp} appearance-none bg-transparent ${isSubmitting ? 'opacity-50' : ''}`}
+                            disabled={isSubmitting}
+                            required
                         >
-                            <option value="">Select a service</option>
-                            <option value="Teeth Treatment">Teeth Treatment</option>
-                            <option value="Extraction">Extraction</option>
-                            <option value="Braces">Braces</option>
-                            <option value="Implantation">Implantation</option>
-                            <option value="Dental prosthetics (crowns)">Dental prosthetics (crowns)</option>
-                            <option value="Veneers">Veneers</option>
+                            <option value="">{t('Choose a service')}</option>
+                            <option value="Лечение зубов">{t('Tooth treatment')}</option>
+                            <option value="Удаление">{t('Extraction')}</option>
+                            <option value="Брекеты">{t('Braces')}</option>
+                            <option value="Имплантация">{t('Implantatsiya')}</option>
+                            <option value="Протезирование">{t('Tish protezlari')}</option>
+                            <option value="Виниры">{t('Vinerlar')}</option>
                         </select>
                     </div>
-
-                    {errors.services && (
-                        <p className={`${styles.error_message}`}>{errors.services}</p>
-                    )}
                 </div>
             </div>
+
             <div className={`${styles.appoinmentFormContent} mt-[20px]`}>
-                <label className={`${styles.appoinmentLabel}`} htmlFor="">Message</label>
+                <label className={`${styles.appoinmentLabel}`} htmlFor="">{t('Message')}</label>
                 <textarea
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
-                    className="py-[12px] px-[16px] border-1 border-[#52525B40] font-normal text-[16px] leading-[24px] text-[#52525B] rounded-[8px] resize-none lg:min-h-[120px] xl:min-h-[144px] outline-none w-full"
-                    placeholder="Include a message...">
-                </textarea>
+                    className={`py-[12px] px-[16px] border-1 border-[#52525B40] font-normal text-[16px] leading-[24px] text-[#52525B] rounded-[8px] resize-none lg:min-h-[120px] xl:min-h-[144px] outline-none w-full ${isSubmitting ? 'opacity-50' : ''}`}
+                    placeholder={t('Any additional information')}
+                    disabled={isSubmitting}
+                    required
+                />
             </div>
-            
-            <button className="w-full py-[16px] bg-[#3C2A97] rounded-[8px] cursor-pointer font-medium text-[18px] leading-[26px] text-[#FFFFFF] border-2 border-[#3C2A97] mt-[15px] xl:mt-[24px] hover:bg-transparent hover:text-black transition-all duration-500">Confirm Appoinment</button>
+
+            <button
+                type="submit"
+                disabled={isSubmitting}
+                className={`w-full py-[16px] bg-[#3C2A97] rounded-[8px] cursor-pointer font-medium text-[18px] leading-[26px] text-[#FFFFFF] border-2 border-[#3C2A97] mt-[15px] xl:mt-[24px] hover:bg-transparent hover:text-black transition-all duration-500 ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
+                    }`}
+            >
+                {isSubmitting ? t('Sending...') : t('Confirm Appointment')}
+            </button>
         </form>
     )
 }

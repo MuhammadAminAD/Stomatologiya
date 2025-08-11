@@ -1,3 +1,123 @@
 {
-  "banner": "Biz yuqori sifatli stomatologik xizmatlarni taqdim etamiz"
+  "banner": "Biz zamonaviy uskunalar yordamida yuqori sifatli stomatologik xizmatlarni ko'rsatamiz va sizning tabassumingizga g'amxo'rlik qilamiz",
+  "Main": "Bosh sahifa",
+  "Services": "Xizmatlar",
+  "Advantages": "Afzalliklari",
+  "About us": "Biz haqimizda",
+  "Contact": "Aloqa",
+  "Appointment": "Qabulga yozilish",
+  "Call Now": "Hozir qo'ng'iroq qiling",
+  "Professional dentistry": "Professional stomatologiya",
+  "How to contact us": "Qanday biz bilan bog'lanish mumkin?",
+  "Just follow these simple steps": "Faqat shu oddiy qadamlarni bajaring",
+  "Call for appointment": "Qabulga yozilish",
+  "Get a Date & Serial": "Sana va navbat olish",
+  "Consult Your dentist": "Stomatolog bilan maslahat",
+  "Bright Smiles, Healthy Lives": "Yorqin tabassum sog'lom hayot",
+  "From routine check ups to advanced cosmetic treatments, we offer complete dental care for the whole family. Your smile is safe in our hands": "Oddiy tekshiruvlardan tortib estetik davolashgacha biz butun oila uchun to'liq stomatologik xizmatlarni taklif etamiz. Sizning tabassumingiz ishonchli qo'llarda",
+  "Choose a service": "Xizmatni tanlang",
+  "Tooth treatment": "Tish davolash",
+  "Extraction": "Olib tashlash",
+  "Braces": "Breketlar",
+  "Implantation": "Implantatsiya",
+  "Dental prosthetics": "Tish protezlari",
+  "Veneers": "Vinerlar",
+  "Any additional information": "Har qanday qo'shimcha ma'lumot",
+  "keyFeatures": {
+    "mainTitle": "Bizning ustun",
+    "specialText": "Taraflarimiz",
+    "keyText": "ASOSIY",
+    "featureText": "AFZALLIKLAR"
+  },
+  "features": {
+    "laserTechnology": {
+      "title": "Lazer Texnologiyasi",
+      "desc": "Dunyodagi eng ilg'or Diod Lazer. Sizning davolash tajribangiz tinch va silliq bo'ladi."
+    },
+    "advancedEquipment": {
+      "title": "Ilg'or Uskunalar",
+      "desc": "Aniq va qulay davolashni ta'minlaydigan eng zamonaviy stomatologik uskunalar."
+    },
+    "expertCare": {
+      "title": "Mutaxassis G'amxo'rlik",
+      "desc": "Shaxsiy stomatologik yechimlarni taqdim etuvchi yuqori malakali mutaxassislar."
+    },
+    "digitalDentistry": {
+      "title": "Raqamli Stomatologiya",
+      "desc": "Aniq diagnostika va davolash rejasini tuzish uchun zamonaviy raqamli yechimlar."
+    },
+    "painFreeTreatment": {
+      "title": "Og'riqsiz Davolash",
+      "desc": "Eng so'nggi texnologiyalardan foydalanib minimal noqulaylik bilan qulay protseduralar."
+    },
+    "qualityMaterials": {
+      "title": "Sifatli Materiallar",
+      "desc": "Uzoq muddatli va bardoshli natijalarni ta'minlaydigan yuqori sifatli materiallar."
+    }
+  },
+  "banner-page": {
+    "title": {
+      "part1": "Ishonch bilan tabassum qiling",
+      "part2": "Quvonch bilan yashang"
+    },
+    "description": "Biz to'liq stomatologik xizmatlarni taklif etamiz — muntazam tekshiruvlardan tortib, ilg'or tabassum o'zgartirishlarigacha — qulaylik, sifat va ishonchga e'tibor bilan. Zamonaviy texnologiyalar va yumshoq usullardan foydalanib, har bir tashrifni stresssiz va samarali qilamiz.",
+    "appointmentButton": "Qabulga yozilish"
+  },
+  "WHO WE ARE": {
+    "part1": "BIZ",
+    "part2": "KIMIZ"
+  },
+  "Our Dental Clinic": "Bizning Klinikamiz Haqimizda",
+  "About Us": "Biz Haqimizda",
+  "About Us Description": "Toshkentdagi Ikromovich stomatologiya klinikasi do'stona va qulay muhitda zamonaviy, yuqori sifatli stomatologik yordam taqdim etadi. Bizning tajribali jamoamiz to'liq xizmatlar spektrini taqdim etadi — tekshiruv va tozalashdan tortib implant va kosmetik davolashgacha — eng so'nggi uskunalar va texnologiyalardan foydalanib. Biz tabassumingizni sog'lom va chiroyli saqlash uchun muloyim va aniq parvarish qilishga e'tibor qaratamiz",
+  "MAKE AN": "QABULQA",
+  "APPOINTMENT": "YOZILING",
+  "Doctor": "Shifokor bilan Maslahatlashing",
+  "Name": "Ism",
+  "Full name": "To'liq ism",
+  "Phone": "Telefon",
+  "Date": "Sana",
+  "Time": "Vaqt",
+  "Service": "Xizmat",
+  "Message": "Xabar",
+  "DD/MM/YYYY": "KK/OO/YYYY",
+  "Select time": "Vaqtni tanlang",
+  "Select Time": "Vaqtni Tanlang",
+  "Select a service": "Xizmatni tanlang",
+  "Include a message...": "Xabar yozing...",
+  "Confirm Appointment": "Qabulni Tasdiqlash",
+  "Name is required": "Ism kiritish shart",
+  "Phone must be in format 99-999-99-99": "Telefon 99-999-99-99 formatida bo'lishi kerak",
+  "Date is required": "Sana kiritish shart",
+  "Time is required": "Vaqt kiritish shart",
+  "January": "Yanvar",
+  "February": "Fevral",
+  "March": "Mart",
+  "April": "Aprel",
+  "May": "May",
+  "June": "Iyun",
+  "July": "Iyul",
+  "August": "Avgust",
+  "September": "Sentyabr",
+  "October": "Oktyabr",
+  "November": "Noyabr",
+  "December": "Dekabr",
+  "Sun": "Yak",
+  "Mon": "Dush",
+  "Tue": "Sesh",
+  "Wed": "Chor",
+  "Thu": "Pay",
+  "Fri": "Jum",
+  "Sat": "Shan",
+  "footer": {
+    "welcoming": "Sizni kutib olamiz",
+    "visitClinic": "Klinikamizga tashrif buyurmoqchimisiz?",
+    "schedule": "Dushanba - Shanba",
+    "hours": "9:00 - 22:00",
+    "importantLinks": "Muhim havolalar",
+    "sayHello": "Biz bilan bog'laning",
+    "address": "Manzil",
+    "fullAddress": "Yangi hayot tumani, Yangi chosh tepa mahallasi, O'zar ko'chasi 6"
+  },
+  "Appointment confirmed successfully!": "Qabul muvaffaqiyatli tasdiqlandi!"
 }

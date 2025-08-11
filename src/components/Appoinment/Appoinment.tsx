@@ -1,9 +1,14 @@
+'use client'
+
 import { styles } from "@/styles/index.style";
 import AppoinmentImg from "@/assets/images/AppoinmentImg.png";
 import Image from "next/image";
 import AppoinmentForm from "./AppoinmentForm";
+import { useTranslation } from 'react-i18next';
 
 export default function Appoinment() {
+  const { t } = useTranslation();
+
   return (
     <div
       id="appointment-page"
@@ -11,10 +16,10 @@ export default function Appoinment() {
     >
       <div className="lg:flex justify-between items-center">
         <h2 className={`${styles.title}`}>
-          MAKE AN <span className="text-[#3C2A97]">APPOINMENT</span>
+          {t('MAKE AN')} <span className="text-[#3C2A97]">{t('APPOINTMENT')}</span>
         </h2>
         <h3 className={`${styles.subTitle}`}>
-          Consult with our <span className={`${styles.subTitles}`}>Doctor</span>
+            <span className={`${styles.subTitles}`}>{t('Doctor')}</span>
         </h3>
       </div>
       <div className="lg:flex justify-between items-center mt-[72px]">
