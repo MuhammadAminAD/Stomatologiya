@@ -5,7 +5,6 @@ import Logo from '../../assets/icons/Logo'
 import BarsIcon from '../../assets/icons/BarsIcon'
 import XIcon from '../../assets/icons/XIcon'
 import { menuLink } from '@/constants/index.constants'
-import { styles } from '@/styles/index.style'
 import { useTranslation } from 'react-i18next'
 
 export default function Navbar() {
@@ -35,7 +34,7 @@ export default function Navbar() {
     }
 
     initializeLanguage()
-  }, []) // Only run once on mount
+  }, [i18n]) // Added missing dependency
 
   // Handle body overflow when mobile menu is active
   useEffect(() => {
@@ -246,7 +245,7 @@ export default function Navbar() {
               >
                 {/* Mini Globe Icon */}
                 <svg className="w-3.5 h-3.5 flex-shrink-0 text-gray-600 group-hover:text-[#3C2A97] transition-colors duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 919-9" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 919-9" />
                 </svg>
                 <span className="font-semibold text-gray-700 group-hover:text-[#3C2A97] text-xs transition-colors duration-300 flex-shrink-0">
                   {currentLanguage?.shortLabel || 'UZ'}

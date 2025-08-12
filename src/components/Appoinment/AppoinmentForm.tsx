@@ -4,6 +4,16 @@ import { Calendar, ChevronLeft, ChevronRight, Clock } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { useTranslation } from 'react-i18next';
 
+// Define types for form data
+interface FormData {
+    name: string;
+    phone: string;
+    date: string;
+    time: string;
+    services: string;
+    message: string;
+}
+
 export default function AppoinmentForm() {
     const { t } = useTranslation();
     const [name, setName] = useState<string>('')
@@ -39,7 +49,7 @@ export default function AppoinmentForm() {
         return () => document.removeEventListener('mousedown', handleClickOutside)
     }, [])
 
-    const sendToTelegram = async (formData: any) => {
+    const sendToTelegram = async (formData: FormData) => {
         const telegramMessage = `
 🦷 *Новая запись на прием*
 
@@ -102,7 +112,7 @@ export default function AppoinmentForm() {
         }
 
         const finalPhone = "+998" + unformattedPhone;
-        const formData = {
+        const formData: FormData = {
             name,
             phone: finalPhone,
             date,
@@ -126,7 +136,7 @@ export default function AppoinmentForm() {
                 setSubmitStatus('idle');
             }, 3000);
 
-        } catch (error) {
+        } catch {
             setSubmitStatus('error');
             setTimeout(() => setSubmitStatus('idle'), 5000);
         }

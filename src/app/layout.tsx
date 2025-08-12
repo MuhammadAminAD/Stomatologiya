@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Nunito } from "next/font/google";
+import Image from "next/image";
 import "./globals.css";
 import "../constants/i18n";
 import I18nProvider from "@/components/I18nProvider";
@@ -89,10 +90,13 @@ export default function RootLayout({
         {/* Yandex.Metrika noscript fallback */}
         <noscript>
           <div>
-            <img 
+            <Image 
               src="https://mc.yandex.ru/watch/103707478" 
+              width={1}
+              height={1}
               style={{ position: 'absolute', left: '-9999px' }} 
               alt="" 
+              unoptimized
             />
           </div>
         </noscript>

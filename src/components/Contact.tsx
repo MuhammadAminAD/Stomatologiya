@@ -3,6 +3,12 @@ import { styles } from "@/styles/index.style";
 import { useState } from "react";
 import { useTranslation } from 'react-i18next';
 
+// Define types for form data
+interface ContactFormData {
+    name: string;
+    phone: string;
+}
+
 export default function Contact() {
     const { t } = useTranslation();
     const [name, setName] = useState("");
@@ -25,7 +31,7 @@ export default function Contact() {
         setPhone(formatted);
     };
 
-    const sendToTelegram = async (formData: any) => {
+    const sendToTelegram = async (formData: ContactFormData) => {
         const telegramMessage = `
 🦷 *Новая заявка на контакт*
 
@@ -100,7 +106,7 @@ export default function Contact() {
                 setSubmitStatus('idle');
             }, 3000);
 
-        } catch (error) {
+        } catch {
             setSubmitStatus('error');
             setTimeout(() => setSubmitStatus('idle'), 5000);
         }
