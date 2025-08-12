@@ -12,7 +12,7 @@ export default function Header() {
     const { t } = useTranslation()
 
     return (
-       <div id='home-page' className={`${styles.Container} mt-[110px]`}>
+       <div id='home-page' className={`${styles.Container} mt-[145px]`}>
             <div className='flex flex-col-reverse lg:flex-row items-center justify-between gap-6 sm:gap-8 lg:gap-10'>
                 <div className='w-full lg:max-w-[50%] px-4 sm:px-6 lg:px-0'>
                     <h1 className='font-bold text-[24px] xs:text-[28px] sm:text-[32px] md:text-[40px] lg:text-[45px] xl:text-[50px] text-center lg:text-left leading-[1.2] lg:leading-[1.1] text-[#3C2A97] mb-3 sm:mb-4 lg:mb-6'>
@@ -38,7 +38,7 @@ export default function Header() {
                             priority
                             width={500}
                             height={400}
-                            className='w-full h-auto max-w-[280px] xs:max-w-[320px] sm:max-w-[380px] md:max-w-[450px] lg:max-w-[500px] xl:max-w-[600px] object-contain'
+                            className='w-full h-auto max-w-[380px] xs:max-w-[380px] sm:max-w-[400px] md:max-w-[40   0px] lg:max-w-[400px] xl:max-w-[500px] object-contain'
                         />
                     </div>
                 </div>
