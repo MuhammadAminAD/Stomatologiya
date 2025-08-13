@@ -239,11 +239,9 @@ export default function AppoinmentForm() {
         const isSelectedToday = selectedDate &&
             selectedDate.toDateString() === now.toDateString();
 
-        // Generate time slots from 9:00 AM to 10:00 PM (every 30 minutes)
-        for (let hour = 9; hour <= 22; hour++) {
+        // Generate time slots for 24 hours (every 30 minutes)
+        for (let hour = 0; hour < 24; hour++) {
             for (let minute = 0; minute < 60; minute += 30) {
-                if (hour === 22 && minute > 0) break; // Stop at 10:00 PM
-
                 const timeSlot = `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`;
 
                 // Check if this time slot is in the past for today
