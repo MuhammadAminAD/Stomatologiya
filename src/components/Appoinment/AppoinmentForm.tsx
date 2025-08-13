@@ -408,7 +408,7 @@ export default function AppoinmentForm() {
                     <input
                         className={`${styles.appoinmentInp}`}
                         type="text"
-                        placeholder="Полное имя"
+                        placeholder={t('Full name')}
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         disabled={isSubmitting}

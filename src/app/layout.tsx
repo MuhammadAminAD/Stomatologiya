@@ -9,16 +9,32 @@ import Script from "next/script";
 
 const nunito = Nunito({
   variable: "--font-nunito",
-  subsets: ["latin"],
+  subsets: ["latin", "cyrillic"],
 });
 
 export const metadata: Metadata = {
   title: {
-    default: "Ikromovich Dental Clinic Tashkent | Professional Dentistry Services",
-    template: "%s | Ikromovich Dental Clinic"
+    default: "Стоматологическая клиника Икромович Ташкент | Профессиональные стоматологические услуги",
+    template: "%s | Стоматологическая клиника Икромович"
   },
-  description: "Modern dental care in Tashkent with advanced laser technology, pain-free treatments, and expert care. From routine check-ups to cosmetic dentistry, implants, and dental prosthetics. Your smile is safe in our hands. | Современная стоматологическая помощь в Ташкенте с передовыми лазерными технологиями, безболезненным лечением и экспертным уходом. От профилактических осмотров до косметической стоматологии, имплантов и зубных протезов. | Toshkentda zamonaviy lazer texnologiyasi, og'riqsiz davolash va mutaxassis g'amxo'rlik bilan zamonaviy stomatologik yordam. Muntazam tekshiruvlardan tortib kosmetik stomatologiya, implantlar va tish protezlarigacha.",
+  description: "Современная стоматологическая помощь в Ташкенте с передовыми лазерными технологиями, безболезненным лечением и экспертным уходом. От профилактических осмотров до косметической стоматологии, имплантов и зубных протезов. Ваша улыбка в надежных руках. | Modern dental care in Tashkent with advanced laser technology, pain-free treatments, and expert care. From routine check-ups to cosmetic dentistry, implants, and dental prosthetics. | Toshkentda zamonaviy lazer texnologiyasi, og'riqsiz davolash va mutaxassis g'amxo'rlik bilan zamonaviy stomatologik yordam.",
   keywords: [
+    "стоматология Ташкент",
+    "стоматологическая клиника Икромович",
+    "Икромович стоматолог",
+    "профессиональная стоматология",
+    "лазерная стоматология",
+    "безболезненное лечение зубов",
+    "имплантация зубов Ташкент",
+    "косметическая стоматология",
+    "зубные протезы",
+    "виниры Ташкент",
+    "брекеты ортодонтия",
+    "удаление зубов",
+    "цифровая стоматология",
+    "современное стоматологическое оборудование",
+    "семейная стоматология",
+    "стоматологический осмотр",
     "dental clinic Tashkent",
     "Ikromovich dentist",
     "professional dentistry",
@@ -34,20 +50,6 @@ export const metadata: Metadata = {
     "modern dental equipment",
     "family dental care",
     "dental check-up",
-    "стоматология Ташкент",
-    "стоматологическая клиника",
-    "имплантация зубов",
-    "виниры",
-    "брекеты",
-    "Икромович стоматолог",
-    "профессиональная стоматология",
-    "лазерная стоматология",
-    "безболезненное лечение зубов",
-    "косметическая стоматология",
-    "зубные протезы",
-    "удаление зубов",
-    "цифровая стоматология",
-    "семейная стоматология",
     "tish shifokori Toshkent",
     "stomatologiya klinikasi",
     "implantatsiya",
@@ -76,7 +78,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ru">
       <head>
         {/* Favicon */}
         <link rel="icon" type="image/png" href={clinicLogo.src} />

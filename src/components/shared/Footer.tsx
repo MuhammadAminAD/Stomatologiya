@@ -53,7 +53,7 @@ export default function Footer() {
                             <ul className="space-y-3">
                                 {menuLink.map(({ id, name, slug }) => (
                                     <li key={id}>
-                                        <button 
+                                        <button
                                             onClick={() => scrollToSection(slug)}
                                             className="text-base text-white/80 hover:text-white hover:underline transition-all duration-200 text-left block"
                                         >
@@ -70,25 +70,32 @@ export default function Footer() {
                         <h3 className="text-sm font-medium text-white/70 mb-4 uppercase tracking-wide">
                             {t('footer.sayHello')}
                         </h3>
-                        
-                        <Link 
-                            href={'mailto:hello@reallygreatsite.com'} 
+
+                        <Link
+                            href={'tel:+998901095257'}
                             className="text-base text-white hover:text-white/80 hover:underline transition-colors mb-5 block"
                         >
-                            hello@reallygreatsite.com
+                            +998 90 109 52 57
                         </Link>
-                        
+
                         <div>
                             <h4 className="text-sm font-medium text-white/70 mb-2 uppercase tracking-wide">
                                 {t('footer.address')}
                             </h4>
                             <address className="text-base text-white/80 leading-relaxed not-italic">
-                                {t('footer.fullAddress')}
+                                <a
+                                    href={`https://yandex.uz/maps/-/CHtAr43T`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="hover:text-white transition-colors underline"
+                                >
+                                    {t('footer.fullAddress')}
+                                </a>
                             </address>
                         </div>
                     </div>
                 </div>
-                
+
                 {/* Minimal Bottom Section */}
                 <div className="mt-10 pt-5 border-t border-white/10 text-center">
                     <p className="text-sm text-white/50">© 2025 Ikromovich Dental Clinic.</p>
